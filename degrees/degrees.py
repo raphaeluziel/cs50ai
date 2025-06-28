@@ -25,7 +25,7 @@ def load_data(directory):
             people[row["id"]] = {
                 "name": row["name"],
                 "birth": row["birth"],
-                "movies": set()
+                "movies": set(),
             }
             if row["name"].lower() not in names:
                 names[row["name"].lower()] = {row["id"]}
@@ -39,7 +39,7 @@ def load_data(directory):
             movies[row["id"]] = {
                 "title": row["title"],
                 "year": row["year"],
-                "stars": set()
+                "stars": set(),
             }
 
     # Load stars
@@ -93,13 +93,24 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    print("\nNAMES\n")
-    pprint.pprint(names)
-    print("\nPEOPLE\n")
-    pprint.pprint(people)
-    print("\nMOVIES\n")
-    pprint.pprint(movies)
-    print()
+    # print("\nNAMES\n")
+    # pprint.pprint(names)
+    # print("\nPEOPLE\n")
+    # pprint.pprint(people)
+    # print("\nMOVIES\n")
+    # pprint.pprint(movies)
+    # print()
+
+    # pprint.pprint(neighbors_for_person(person_id_for_name("kevin bacon")))
+
+    print(f"source = {source}, target = {target}")
+
+    plist = QueueFrontier()
+    for n in neighbors_for_person(source):
+        print(n)
+        plist.add(node=n)
+
+    pprint.pprint(f"plist = {plist}")
 
     # TODO
     raise NotImplementedError
