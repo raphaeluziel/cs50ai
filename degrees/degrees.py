@@ -1,4 +1,5 @@
 import csv
+import pprint
 import sys
 
 from util import Node, StackFrontier, QueueFrontier
@@ -91,6 +92,14 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+
+    print("\nNAMES\n")
+    pprint.pprint(names)
+    print("\nPEOPLE\n")
+    pprint.pprint(people)
+    print("\nMOVIES\n")
+    pprint.pprint(movies)
+    print()
 
     # TODO
     raise NotImplementedError
