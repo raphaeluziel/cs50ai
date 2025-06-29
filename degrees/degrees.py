@@ -63,12 +63,15 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
-    if source is None:
-        sys.exit("Person not found.")
-    target = person_id_for_name(input("Name: "))
-    if target is None:
-        sys.exit("Person not found.")
+    # source = person_id_for_name(input("Name: "))
+    # if source is None:
+    #     sys.exit("Person not found.")
+    # target = person_id_for_name(input("Name: "))
+    # if target is None:
+    #     sys.exit("Person not found.")
+
+    source = person_id_for_name("Kevin Bacon")
+    target = person_id_for_name("Demi Moore")
 
     path = shortest_path(source, target)
 
@@ -103,14 +106,15 @@ def shortest_path(source, target):
 
     # pprint.pprint(neighbors_for_person(person_id_for_name("kevin bacon")))
 
-    print(f"source = {source}, target = {target}")
+    print(f"source = {source}, target = {target}\n")
 
     plist = QueueFrontier()
     for n in neighbors_for_person(source):
-        print(n)
+        print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
         plist.add(node=n)
 
-    pprint.pprint(f"plist = {plist}")
+    print()
+    # print(f"plist = {plist}")
 
     # TODO
     raise NotImplementedError
