@@ -96,28 +96,33 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # print("\nNAMES\n")
-    # pprint.pprint(names)
-    # print("\nPEOPLE\n")
-    # pprint.pprint(people)
-    # print("\nMOVIES\n")
-    # pprint.pprint(movies)
-    # print()
-
     # pprint.pprint(neighbors_for_person(person_id_for_name("kevin bacon")))
 
-    print(f"source = {source}, target = {target}\n")
+    print(f"\nsource = Kevin Bacon({source}), target = Demi Moore({target})\n")
 
-    plist = QueueFrontier()
+    frontier = QueueFrontier()
     for n in neighbors_for_person(source):
-        print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
-        plist.add(node=n)
+        #print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
+        print(f"{n[0]}     {n[1]}")
+        if target == n[1]:
+            frontier.add(node=n)
+        #print(f"node = {n}")
+
+    explored = set()
 
     print()
-    # print(f"plist = {plist}")
+    for n in neighbors_for_person(target):
+        print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
+        # print(f"{n[0]}     {n[1]}")
+        # frontier.add(node=n)
+        # print(f"node = {n}")
+
+    print()
+    print(f"{frontier}\n")
 
     # TODO
-    raise NotImplementedError
+    # raise NotImplementedError
+    return (0, 0)
 
 
 def person_id_for_name(name):
