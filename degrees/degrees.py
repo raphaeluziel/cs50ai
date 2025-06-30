@@ -71,7 +71,7 @@ def main():
     #     sys.exit("Person not found.")
 
     source = person_id_for_name("Kevin Bacon")
-    target = person_id_for_name("Demi Moore")
+    target = person_id_for_name("Dustin Hoffman")
 
     path = shortest_path(source, target)
 
@@ -98,31 +98,64 @@ def shortest_path(source, target):
 
     # pprint.pprint(neighbors_for_person(person_id_for_name("kevin bacon")))
 
-    print(f"\nsource = Kevin Bacon({source}), target = Demi Moore({target})\n")
-
-    frontier = QueueFrontier()
-    for n in neighbors_for_person(source):
-        #print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
-        print(f"{n[0]}     {n[1]}")
-        if target == n[1]:
-            frontier.add(node=n)
-        #print(f"node = {n}")
+    print(f"\nsource = {source}, target = {target}\n")
 
     explored = set()
+    frontier = QueueFrontier()
+    path = []
+    node = neighbors_for_person(source)
+    print(f"\nNode\n{node}")
+
+    def goal_reached():
+        for n in neighbors_for_person(source):
+            if n[1] == target:
+                path.append(n)
+                return path
+    
+    
+    frontier.add(node)
+
+    # Remove a node from the frintier
+    node_to_check = frontier.remove()
+    print(f"\nremoved = {node_to_check}")
+
+
+
+    # for n in neighbors_for_person(source):
+    #     #print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
+    #     if n[1] == target:
+    #         #print(f"HERE {n}")
+    #         path.append(n)
+    #         break
+    #     else:
+    #         #print(f"NNNNN {n}")
+    #         frontier.add(node=n)
+    #         #print(f"{n[0]}     {n[1]}")
+    #     #else:
+    #         #explored.add(n)
+    #     #print(f"node = {n}")
+
+    # print()
+    # for n in neighbors_for_person(target):
+    #     #print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
+    #     # print(f"{n[0]}     {n[1]}")
+    #     # frontier.add(node=n)
+    #     # print(f"node = {n}")
+    #     pass
 
     print()
-    for n in neighbors_for_person(target):
-        print(f"{movies[n[0]]["title"]}     {people[n[1]]["name"]}")
-        # print(f"{n[0]}     {n[1]}")
-        # frontier.add(node=n)
-        # print(f"node = {n}")
+    print(f"Frontier\n{frontier}\n")
+    print(f"explored\n{explored}\n")
+    print(f"path\n{path}\n")
 
-    print()
-    print(f"{frontier}\n")
 
     # TODO
     # raise NotImplementedError
-    return (0, 0)
+
+    #print(f"\nHEY\n{people["102"]}\n")
+
+    #return [("104257", "193")]
+    return path
 
 
 def person_id_for_name(name):
