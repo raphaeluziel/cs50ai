@@ -5,7 +5,7 @@ class Node():
         self.action = action
 
         def __str__(self):
-            return f"BBBB{self.state} + HHHH{self.parent} + {self.action}"
+            return f"{self.state}"
 
 
 class StackFrontier():
