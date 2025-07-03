@@ -98,23 +98,43 @@ def shortest_path(source, target):
 
     frontier = QueueFrontier()
     explored = set()
-
-    def expand(node):
-        frontier.add(neighbors_for_person(node.state))
-    
-    node = Node(state=source, parent=source, action=expand)
-    frontier.add(node)
+    explored_people = set()
+    explored_movies = set()
+    path2 = []
+    path = []
 
     def is_goal_node(node):
         for n in node:
             if n[1] == target:
+                path.append(n)
+                path2.append(node)
                 return True
         return False
-    
-     
 
-    print(node)
-    print(frontier)
+    def expand_node_and_add_to_frontier(node):
+        explored.add(node)
+        unique_people = set()
+        for n in node:
+            print(f"n= {n}")
+            unique_people.add(n[1])
+        for person in unique_people:
+            if person not in explored_people:
+                node = neighbors_for_person(person)
+                frontier.add(node)
+                explored_people.add(person)
+        #print(f"\nunique pairs\n{unique_people}\n")
+
+    node = neighbors_for_person(source)
+    #print(f"\nNode\n{node}\n")
+
+    while not is_goal_node(node):
+        expand_node_and_add_to_frontier(node)
+        node = frontier.remove()
+
+
+    print(f"\nPath\n{path}\n")
+    print(f"\nPath2\n{path2}\n")
+    return path
 
 
 
