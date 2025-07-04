@@ -102,39 +102,41 @@ def shortest_path(source, target):
     def expand_node(node):
         neighbors = neighbors_for_person(node.state)
         for neighbor in neighbors:
-            person = Node(state=neighbor[1], parent=node.state, action=None)
-            if not frontier.contains_state(person) and person not in explored:
-                frontier.add(person)
+            if neighbor[1] != node.state:
+                person = Node(state=neighbor[1], parent=node.state, action=None)
+                if not frontier.contains_state(person):
+                    frontier.add(person)
 
-        print(frontier)
+        print({frontier}")
         for e in explored:
-            print(e)
-    
+            print(e.state)
+
     def goal_reached(node):
         node.state == target
 
     node = Node(state=source, parent=None, action=None)
     frontier.add(node)
+
     node_to_check = frontier.remove()
     explored.add(node_to_check)
     if goal_reached(node_to_check):
         print("GOAL!!")
     else:
-        print(node_to_check)
+        #print(node_to_check)
         expand_node(node_to_check)
 
     node_to_check = frontier.remove()
     explored.add(node_to_check)
-
     if goal_reached(node_to_check):
         print("GOAL!!")
     else:
-        print(node_to_check)
+        #print(node_to_check)
         expand_node(node_to_check)
 
-    #print(node)
-    #print(frontier)
+    # print(node)
+    # print(frontier)
 
+    # print(neighbors_for_person("641"))
 
 
 def person_id_for_name(name):
