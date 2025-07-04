@@ -3,7 +3,7 @@ class Node():
         self.state = state
         self.parent = parent
         self.action = action
-
+        
     def __str__(self):
         return f"State = {self.state}, Parent = {self.parent}"
 
@@ -30,7 +30,10 @@ class StackFrontier():
             return node
         
     def __str__(self):
-        return f"{self.frontier}"
+        s = ""
+        for x in self.frontier:
+            s = s + x.state + " parent = " + x.parent + "\n"
+        return s
 
 
 class QueueFrontier(StackFrontier):

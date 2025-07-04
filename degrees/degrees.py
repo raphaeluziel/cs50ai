@@ -99,22 +99,41 @@ def shortest_path(source, target):
     frontier = QueueFrontier()
     explored = set()
 
-    def expand(node):
-        frontier.add(neighbors_for_person(node.state))
+    def expand_node(node):
+        neighbors = neighbors_for_person(node.state)
+        for neighbor in neighbors:
+            person = Node(state=neighbor[1], parent=node.state, action=None)
+            if not frontier.contains_state(person) and person not in explored:
+                frontier.add(person)
+
+        print(frontier)
+        for e in explored:
+            print(e)
     
-    node = Node(state=source, parent=source, action=expand)
+    def goal_reached(node):
+        node.state == target
+
+    node = Node(state=source, parent=None, action=None)
     frontier.add(node)
+    node_to_check = frontier.remove()
+    explored.add(node_to_check)
+    if goal_reached(node_to_check):
+        print("GOAL!!")
+    else:
+        print(node_to_check)
+        expand_node(node_to_check)
 
-    def is_goal_node(node):
-        for n in node:
-            if n[1] == target:
-                return True
-        return False
-    
-     
+    node_to_check = frontier.remove()
+    explored.add(node_to_check)
 
-    print(node)
-    print(frontier)
+    if goal_reached(node_to_check):
+        print("GOAL!!")
+    else:
+        print(node_to_check)
+        expand_node(node_to_check)
+
+    #print(node)
+    #print(frontier)
 
 
 
