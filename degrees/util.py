@@ -3,9 +3,13 @@ class Node():
         self.state = state
         self.parent = parent
         self.action = action
+
+    def get_path(self):
+        path = [self.state]
+        path.append(self.parent)
         
     def __str__(self):
-        return f"State = {self.state[0]}, Parent = {self.parent}"
+        return f"{self.state[1]} <---- {self.parent}"
 
 
 class StackFrontier():
