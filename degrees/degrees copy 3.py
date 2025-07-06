@@ -98,95 +98,45 @@ def shortest_path(source, target):
 
     frontier = QueueFrontier()
     explored = set()
-    path = []
 
-    for movie in people[source]["movies"]:
-        node = Node(state=(movie, source), parent=None, action=None)
-        frontier.add(node)
-        print()
+    def expand_node(node):
+        neighbors = neighbors_for_person(node.state)
+        for neighbor in neighbors:
+            if neighbor[1] != node.state:
+                person = Node(state=neighbor[1], parent=node.state, action=None)
+                if not frontier.contains_state(person):
+                    frontier.add(person)
 
+        print(f"{frontier}")
+        for e in explored:
+            print(e.state)
 
-    print(f"Frontier A\n{frontier}")
+    def goal_reached(node):
+        node.state == target
 
-    node_to_check = frontier.remove()
-    explored.add(node_to_check)
-
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
-
-    print(f"Frontier B\n{frontier}")
-
-
+    node = Node(state=source, parent=None, action=None)
+    frontier.add(node)
 
     node_to_check = frontier.remove()
     explored.add(node_to_check)
-
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
-
-    print(f"Frontier C\n{frontier}")
-
-
-
+    if goal_reached(node_to_check):
+        print("GOAL!!")
+    else:
+        #print(node_to_check)
+        expand_node(node_to_check)
 
     node_to_check = frontier.remove()
     explored.add(node_to_check)
+    if goal_reached(node_to_check):
+        print("GOAL!!")
+    else:
+        #print(node_to_check)
+        expand_node(node_to_check)
 
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
+    # print(node)
+    # print(frontier)
 
-    print(f"Frontier D\n{frontier}")
-
-
-
-    node_to_check = frontier.remove()
-    explored.add(node_to_check)
-
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
-
-    print(f"Frontier D\n{frontier}")
-
-
-
-    node_to_check = frontier.remove()
-    explored.add(node_to_check)
-
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
-
-    print(f"Frontier E\n{frontier}")
-
-
-
-
-
-    node_to_check = frontier.remove()
-    explored.add(node_to_check)
-
-    for node in neighbors_for_person(node_to_check.state[1]):
-        if node[1] == target:
-            print("GOALLLLL!!!!!!")
-        elif not frontier.contains_state(node):
-            frontier.add(Node(state=node, parent=source, action=None))
-
-    print(f"Frontier F\n{frontier}")
-
+    print(neighbors_for_person("102"))
 
 
 def person_id_for_name(name):

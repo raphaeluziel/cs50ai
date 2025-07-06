@@ -5,7 +5,7 @@ class Node():
         self.action = action
         
     def __str__(self):
-        return f"State = {self.state}, Parent = {self.parent}"
+        return f"State = {self.state[0]}, Parent = {self.parent}"
 
 
 class StackFrontier():
@@ -32,7 +32,7 @@ class StackFrontier():
     def __str__(self):
         s = ""
         for x in self.frontier:
-            s = s + x.state + " parent = " + x.parent + "\n"
+            s = s + str(x.state) + " parent = " + str(x.parent) + "\n"
         return s
 
 
