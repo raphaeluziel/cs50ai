@@ -63,15 +63,15 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    # source = person_id_for_name(input("Name: "))
-    # if source is None:
-    #     sys.exit("Person not found.")
-    # target = person_id_for_name(input("Name: "))
-    # if target is None:
-    #     sys.exit("Person not found.")
+    source = person_id_for_name(input("Name: "))
+    if source is None:
+        sys.exit("Person not found.")
+    target = person_id_for_name(input("Name: "))
+    if target is None:
+        sys.exit("Person not found.")
 
-    source = person_id_for_name("Kevin Bacon")
-    target = person_id_for_name("Dustin Hoffman")
+    # source = person_id_for_name("Kevin Bacon")
+    # target = person_id_for_name("Dustin Hoffman")
 
     path = shortest_path(source, target)
 
@@ -103,39 +103,45 @@ def shortest_path(source, target):
     for movie in people[source]["movies"]:
         node = Node(state=(movie, source), parent=None, action=None)
         frontier.add(node)
-        print()
+        #print(f"Node = {node}")
 
+    #print(f"Frontier 0\n{frontier}")
 
-    print(f"Frontier 0\n{frontier}")
-
-    j = 0
     goal_found = False
     while not frontier.empty() and not goal_found:
-        j += 1
-
         node_to_check = frontier.remove()
-        explored.add(node_to_check)
+        explored.add(node_to_check.state)
 
-        for node in neighbors_for_person(node_to_check.state[1]):
-            if node[1] == target:
+        for pair in neighbors_for_person(node_to_check.state[1]):
+            if pair[1] == target:
                 #print("GOALLLLL!!!!!!")
                 #print(node)
-                path.append(Node(state=node, parent=node_to_check, action=None))
+                path.append(Node(state=pair, parent=node_to_check, action=None))
                 goal_found = True
-            elif not frontier.contains_state(node):
-                frontier.add(Node(state=node, parent=source, action=None))
+            elif not frontier.contains_state(pair) and pair not in explored:
+                frontier.add(Node(state=pair, parent=node_to_check, action=None))
 
         #print(f"Frontier {j}\n{frontier}")
 
+    def trace(node):
+        if node.parent is None:
+            return
+        
+        #print(f"node = {node}, parent = {node.parent}")
+        
+        path.append(node.parent)
+        #print(f"path = {path}")
+        return trace(node.parent)
     
+    trace(path[0])
+
     #print(path)
+    path_trace = []
+    for p in path:
+        print(f"p = {p}")
+        path_trace.append(p.state)
 
-    fing = path[0]
-    print(fing)
-
-    path.append(fing.parent)
-
-    print(path)
+    return list(reversed(path_trace))
 
 
 def person_id_for_name(name):

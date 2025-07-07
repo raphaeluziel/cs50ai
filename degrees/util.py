@@ -3,13 +3,10 @@ class Node():
         self.state = state
         self.parent = parent
         self.action = action
-
-    def get_path(self):
-        path = [self.state]
-        path.append(self.parent)
         
     def __str__(self):
-        return f"{self.state[1]} <---- {self.parent}"
+        return f"({self.state[0]}, {self.state[1]})"
+    #     return f"{self.state[1]} <---- {self.parent}"
 
 
 class StackFrontier():
@@ -33,11 +30,11 @@ class StackFrontier():
             self.frontier = self.frontier[:-1]
             return node
         
-    def __str__(self):
-        s = ""
-        for x in self.frontier:
-            s = s + str(x.state) + " parent = " + str(x.parent) + "\n"
-        return s
+    # def __str__(self):
+    #     s = ""
+    #     for x in self.frontier:
+    #         s = s + str(x.state) + " parent = " + str(x.parent) + "\n"
+    #     return s
 
 
 class QueueFrontier(StackFrontier):
